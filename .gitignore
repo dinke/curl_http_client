@@ -1,0 +1,6 @@
+!.gitignore
+.project
+.settings/
+.buildpath
+.DS_Store
+*~
