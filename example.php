@@ -6,9 +6,9 @@
  * @author Dragan Dinic <dragan@dinke.net>
  */
 
-require_once("curl_http_client.php");
+require_once("Dinke/CurlHttpClient.php");
 
-$curl = new Curl_HTTP_Client();
+$curl = new CurlHttpClient();
 
 //pretend to be Firefox 19.0 on Mac
 $useragent = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.8; rv:19.0) Gecko/20100101 Firefox/19.0";

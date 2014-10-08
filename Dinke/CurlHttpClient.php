@@ -1,4 +1,7 @@
 <?php
+
+namespace Dinke;
+
 /**
  * @version 2.0
  * @package dinke.net
@@ -23,7 +26,7 @@
  * $post_data = array('login' => 'pera', 'password' => 'joe');
  * $html_data = $curl->send_post_data(http://www.foo.com/login.php, $post_data);
  */
-class Curl_HTTP_Client
+class CurlHttpClient
 {
 	/**
 	 * Curl handle
