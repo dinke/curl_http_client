@@ -3,11 +3,10 @@
 namespace Dinke;
 
 /**
- * @version 2.0
- * @package dinke.net
- * @copyright &copy; 2013 Lampix.net
+ * @version 2.0.x
+ * @copyright &copy; 2014 Lampix.net
  * @author Dragan Dinic <dragan@dinke.net>
- * @todo Create proper open source license (BSD or whatever)
+ * @license http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License
  * @todo Possible debug mode
  */
 
@@ -19,12 +18,12 @@ namespace Dinke;
  * sending post data, managing cookies, etc.
  *
  * Samle usage:
- * $curl = new Curl_HTTP_Client();
+ * $curl = new CurlHttpClient();
  * $useragent = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.8; rv:19.0)";
- * $curl->set_user_agent($useragent);
- * $curl->store_cookies("/tmp/cookies.txt");
+ * $curl->setUserAgent($useragent);
+ * $curl->storeCookies("/tmp/cookies.txt");
  * $post_data = array('login' => 'pera', 'password' => 'joe');
- * $html_data = $curl->send_post_data(http://www.foo.com/login.php, $post_data);
+ * $html_data = $curl->sendPostData(http://www.foo.com/login.php, $post_data);
  */
 class CurlHttpClient
 {
@@ -43,17 +42,17 @@ class CurlHttpClient
 	 * @access protected
 	 */
 	protected $config = array(
-							CURLOPT_FAILONERROR 	=> false, 			//whether to fail if http response code is >=400
-							CURLOPT_FOLLOWLOCATION	=> true,  			//whether to follow any 'Location:..' header from response
-							CURLOPT_AUTOREFERER		=> true, 			//whether to automatically set referer for http redirections
-							CURLOPT_ENCODING		=> 'gzip, deflate', //The contents of the Accept-Encoding header in curl request
-							CURLOPT_SSL_VERIFYPEER	=> false, 			//whether to verify ssl peer's  certificate
-							CURLOPT_HEADER			=> false,			//whether to add response headers to the output
-							CURLOPT_USERAGENT		=> 'Curl_HTTP_Client v2.0' //default user agent if none is set
+							CURLOPT_FAILONERROR 	=> false, 			    //whether to fail if http response code is >=400
+							CURLOPT_FOLLOWLOCATION	=> true,  			    //whether to follow any 'Location:..' header from response
+							CURLOPT_AUTOREFERER		=> true, 			    //whether to automatically set referer for http redirections
+							CURLOPT_ENCODING		=> 'gzip, deflate',     //The contents of the Accept-Encoding header in curl request
+							CURLOPT_SSL_VERIFYPEER	=> false, 			    //whether to verify ssl peer's  certificate
+							CURLOPT_HEADER			=> false,			    //whether to add response headers to the output
+							CURLOPT_USERAGENT		=> 'CurlHttpClient/v2.0'//default user agent if none is set
 			);
 
 	/**
-	 * Curl_HTTP_Client constructor
+	 * CurlHttpClient constructor
 	 *
 	 * @access public
 	 */
@@ -80,11 +79,11 @@ class CurlHttpClient
 	 * Set custom curl option
 	 * 	(usually not needed to call this directly, advanced users only)
 	 *
-	 * @param option $opt
-	 * @param value $value
+	 * @param int $opt
+	 * @param int $value
 	 * @access public
 	 */
-	public function set_custom_option($opt, $value)
+	public function setCustomOption($opt, $value)
 	{
 		curl_setopt($this->ch, $opt, $value);
 	}
@@ -92,10 +91,10 @@ class CurlHttpClient
 	/**
 	 * Set client's useragent
 	 *
-	 * @param string user agent
+	 * @param string $useragent
 	 * @access public
 	 */
-	public function set_user_agent($useragent)
+	public function setUserAgent($useragent)
 	{
 		curl_setopt($this->ch, CURLOPT_USERAGENT, $useragent);
 	}
@@ -103,10 +102,10 @@ class CurlHttpClient
 	/**
 	 * Set custom referer
 	 *
-	 * @param string referer_url
+	 * @param string $referer_url
 	 * @access public
 	 */
-	public function set_referer($referer_url)
+	public function setReferer($referer_url)
 	{
 		curl_setopt($this->ch, CURLOPT_REFERER, $referer_url);
 	}
@@ -117,7 +116,7 @@ class CurlHttpClient
 	 * @param boolean true to include response headers, false to suppress them
 	 * @access public
 	 */
-	public function include_response_headers($value)
+	public function includeResponseHeaders($value)
 	{
 		curl_setopt($this->ch, CURLOPT_HEADER, $value);
 	}
@@ -125,11 +124,11 @@ class CurlHttpClient
 	/**
 	 * Set username/pass for basic http auth
 	 *
-	 * @param string user
-	 * @param string pass
+	 * @param string $username
+	 * @param string $password
 	 * @access public
 	 */
-	public function set_credentials($username, $password)
+	public function setCredentials($username, $password)
 	{
 		curl_setopt($this->ch, CURLOPT_USERPWD, "$username:$password");
 	}
@@ -138,11 +137,11 @@ class CurlHttpClient
 	/**
 	 * Set proxy to use for each curl request
 	 *
-	 * @param string proxy_url
-	 * @param enable socks5 proxy
+	 * @param string $proxy_url
+	 * @param boolean $socks5 whether to use socks5 [=false]
 	 * @access public
 	 */
-	public function set_proxy($proxy_url, $socks5 = false)
+	public function setProxy($proxy_url, $socks5 = false)
 	{
 		curl_setopt($this->ch, CURLOPT_PROXY, $proxy_url);
 
@@ -156,13 +155,13 @@ class CurlHttpClient
 	/**
 	 * Fetch data from passed URL (by using http get method)
 	 *
-	 * @param string url
-	 * @param string ip address to bind (default null)
-	 * @param int timeout in sec for complete curl operation [=10]
+	 * @param string $url
+	 * @param string $ip address to bind (default null)
+	 * @param int $timeout in sec for complete curl operation [=10]
 	 * @return mixed string data returned from url or boolean false if error occured
 	 * @access public
 	 */
-	public function fetch_url($url, $ip = null, $timeout = 10)
+	public function fetchUrl($url, $ip = null, $timeout = 10)
 	{
 		//set various curl options first
 
@@ -187,7 +186,7 @@ class CurlHttpClient
 		//and finally send curl request
 		$result = curl_exec($this->ch);
 
-		if($this->has_error())
+		if($this->hasError())
 		{
 			return false;
 		}
@@ -199,14 +198,14 @@ class CurlHttpClient
 	/**
 	 * Send post request to target URL
 	 *
-	 * @param string url
-	 * @param mixed post data (assoc array ie. $foo['post_var_name'] = $value or as string like var=val1&var2=val2)
-	 * @param string ip address to bind to (default null)
-	 * @param int timeout in sec for complete curl operation (default 10)
+	 * @param string $url
+	 * @param mixed $postdata (assoc array ie. $foo['post_var_name'] = $value or as string like var=val1&var2=val2)
+	 * @param string $ip IP address to bind to [=null]
+	 * @param int $timeout Timeout in sec for complete curl operation [=10]
 	 * @return mixed string with data returned from url or boolean false if error occured
 	 * @access public
 	 */
-	public function send_post_data($url, $postdata, $ip = null, $timeout = 10)
+	public function sendPostData($url, $postdata, $ip = null, $timeout = 10)
 	{
 		//set various curl options first
 
@@ -228,26 +227,15 @@ class CurlHttpClient
 		//set method to post
 		curl_setopt($this->ch, CURLOPT_POST, true);
 
-
-		//generate post string
-		$post_array = array();
-		if(is_array($postdata))
-		{
-			$post_string = http_build_query($postdata);
-		}
-		else
-		{
-			$post_string = $postdata;
-		}
+		$post_string = is_array($postdata) ? http_build_query($postdata) : $postdata;
 
 		// set post string
 		curl_setopt($this->ch, CURLOPT_POSTFIELDS, $post_string);
 
-
 		//and finally send curl request
 		$result = curl_exec($this->ch);
 
-		if($this->has_error())
+		if($this->hasError())
 		{
 			return false;
 		}
@@ -258,14 +246,14 @@ class CurlHttpClient
 	/**
 	 * Fetch data from target URL and store it directly into file
 	 *
-	 * @param string url
-	 * @param resource value stream resource(ie. fopen)
-	 * @param string ip address to bind (default null)
-	 * @param int timeout in sec for complete curl operation (default 5)
+	 * @param string $url
+	 * @param resource $fp stream resource(ie. fopen)
+	 * @param string $ip address to bind (default null)
+	 * @param int $timeout in sec for complete curl operation (default 5)
 	 * @return boolean true on success false othervise
 	 * @access public
 	 */
-	public function fetch_into_file($url, $fp, $ip=null, $timeout=5)
+	public function fetchIntoFile($url, $fp, $ip=null, $timeout=5)
 	{
 		// set url to post to
 		curl_setopt($this->ch, CURLOPT_URL, $url);
@@ -286,9 +274,9 @@ class CurlHttpClient
 		curl_setopt($this->ch, CURLOPT_TIMEOUT, $timeout);
 
 		//and finally send curl request
-		$result = curl_exec($this->ch);
+		curl_exec($this->ch);
 
-		if($this->has_error())
+		if($this->hasError())
 		{
 			return false;
 		}
@@ -300,10 +288,10 @@ class CurlHttpClient
 	 * Set file location where cookie data will be stored on curl handle close
 	 * 	and then parsed and send along on new requests
 	 *
-	 * @param string absolute path to cookie file (must be in writable dir)
+	 * @param string $cookie_file absolute path to cookie file (must be in writable dir)
 	 * @access public
 	 */
-	public function store_cookies($cookie_file)
+	public function storeCookies($cookie_file)
 	{
 		//make sure all cookies are stored to $cookie_file when curl handle is closed
 		curl_setopt ($this->ch, CURLOPT_COOKIEJAR, $cookie_file);
@@ -319,7 +307,7 @@ class CurlHttpClient
 	 * @param mixed string or array with key=>value (i.e. array('foo'=>'value'))
 	 * @access public
 	 */
-	public function set_cookie($cookie)
+	public function setCookie($cookie)
 	{
 		//if cookie is sent as key=>value array
 		if(is_array($cookie))
@@ -342,10 +330,10 @@ class CurlHttpClient
 	 * http://www.php.net/manual/en/function.curl-getinfo.php
 	 *
 	 * @param int $opt
-	 * @access protected
+	 * @access public
 	 * @return mixed array with all data or sting (depends of $opt param)
 	 */
-	public function get_info($opt = 0)
+	public function getInfo($opt = 0)
 	{
 		return curl_getinfo($this->ch, $opt);
 	}
@@ -356,7 +344,7 @@ class CurlHttpClient
 	 * @access public
 	 * @return string url
 	 */
-	public function get_effective_url()
+	public function getEffectiveUrl()
 	{
 		return $this->get_info(CURLINFO_EFFECTIVE_URL);
 	}
@@ -367,7 +355,7 @@ class CurlHttpClient
 	 * @access public
 	 * @return int
 	 */
-	public function get_http_response_code()
+	public function getHttpResponseCode()
 	{
 		return $this->get_info(CURLINFO_HTTP_CODE);
 	}
@@ -378,7 +366,7 @@ class CurlHttpClient
 	 * @access public
 	 * @return string
 	 */
-	public function get_request_headers()
+	public function getRequestHeaders()
 	{
 		return $this->get_info(CURLINFO_HEADER_OUT);
 	}
@@ -386,7 +374,7 @@ class CurlHttpClient
 	/**
 	 * Total reqeust time in seconds for last transfer
 	 */
-	public function get_request_duration()
+	public function getRequestDuration()
 	{
 		return $this->get_info(CURLINFO_TOTAL_TIME);
 	}
@@ -397,7 +385,7 @@ class CurlHttpClient
 	 * @return string error msg
 	 * @access public
 	 */
-	function get_error_msg()
+	function getErrorMsg()
 	{
 		return "Curl error #" .curl_errno($this->ch) .": " .curl_error($this->ch);
 	}
@@ -408,7 +396,7 @@ class CurlHttpClient
 	 * @access public
 	 * @return boolean
 	 */
-	protected function has_error()
+	protected function hasError()
 	{
 		return (curl_errno($this->ch) != 0) ? true : false;
 	}
