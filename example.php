@@ -6,7 +6,7 @@
  * @license http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License
  */
 
-require_once("Dinke/CurlHttpClient.php");
+require 'vendor/autoload.php';
 
 $curl = new \Dinke\CurlHttpClient();
 
