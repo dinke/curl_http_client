@@ -1,12 +1,24 @@
 {
     "name": "dinke/curl_http_client",
+    "type": "library",
     "description": "Curl based HTTP Client - Simple but effective OOP wrapper around Curl php lib. It allows sending post/get requests, using proxy, binding to specific IP, storing cookies etc.",
+    "keywords": ["curl"],
+    "homepage": "https://github.com/dinke/curl_http_client",
+    "license": "LGPLv3",
+    "authors": [
+        {
+            "name": "Dragan Dinic",
+            "email": "dragan@dinke.net",
+            "homepage": "http://www.dinke.net",
+            "role": "Developer"
+        }
+    ],
     "require": {
         "php": ">=5.3.0"
-    }
+    },
     "autoload": {
-	"psr-0": {
-		"Dinke\\": "."
-	}
+        "psr-0": {
+            "Dinke\\": "."
+        }
     }
 }
