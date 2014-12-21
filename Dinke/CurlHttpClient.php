@@ -326,7 +326,7 @@ class CurlHttpClient
 	}
 
 	/**
-	 * Wraper around curl's get_info method
+	 * Wraper around curl's getinfo method
 	 * http://www.php.net/manual/en/function.curl-getinfo.php
 	 *
 	 * @param int $opt
@@ -346,7 +346,7 @@ class CurlHttpClient
 	 */
 	public function getEffectiveUrl()
 	{
-		return $this->get_info(CURLINFO_EFFECTIVE_URL);
+		return $this->getInfo(CURLINFO_EFFECTIVE_URL);
 	}
 
 	/**
@@ -357,7 +357,7 @@ class CurlHttpClient
 	 */
 	public function getHttpResponseCode()
 	{
-		return $this->get_info(CURLINFO_HTTP_CODE);
+		return $this->getInfo(CURLINFO_HTTP_CODE);
 	}
 
 	/**
@@ -368,7 +368,7 @@ class CurlHttpClient
 	 */
 	public function getRequestHeaders()
 	{
-		return $this->get_info(CURLINFO_HEADER_OUT);
+		return $this->getInfo(CURLINFO_HEADER_OUT);
 	}
 
 	/**
@@ -376,7 +376,7 @@ class CurlHttpClient
 	 */
 	public function getRequestDuration()
 	{
-		return $this->get_info(CURLINFO_TOTAL_TIME);
+		return $this->getInfo(CURLINFO_TOTAL_TIME);
 	}
 
 	/**
