@@ -42,13 +42,14 @@ class CurlHttpClient
 	 * @access protected
 	 */
 	protected $config = array(
-							CURLOPT_FAILONERROR 	=> false, 			    //whether to fail if http response code is >=400
-							CURLOPT_FOLLOWLOCATION	=> true,  			    //whether to follow any 'Location:..' header from response
-							CURLOPT_AUTOREFERER		=> true, 			    //whether to automatically set referer for http redirections
-							CURLOPT_ENCODING		=> 'gzip, deflate',     //The contents of the Accept-Encoding header in curl request
-							CURLOPT_SSL_VERIFYPEER	=> false, 			    //whether to verify ssl peer's  certificate
-							CURLOPT_HEADER			=> false,			    //whether to add response headers to the output
-							CURLOPT_USERAGENT		=> 'CurlHttpClient/v2.0'//default user agent if none is set
+							CURLOPT_FAILONERROR 	=> false,                 //whether to fail if http response code is >=400
+							CURLOPT_FOLLOWLOCATION	=> true,                  //whether to follow any 'Location:..' header from response
+							CURLOPT_AUTOREFERER		=> true,                  //whether to automatically set referer for http redirections
+							CURLOPT_ENCODING		=> 'gzip, deflate',       //The contents of the Accept-Encoding header in curl request
+							CURLOPT_SSL_VERIFYPEER	=> false,                 //whether to verify ssl peer's  certificate
+							CURLOPT_HEADER			=> false,                 //whether to add response headers to the output
+							CURLOPT_USERAGENT		=> 'CurlHttpClient/v2.0', //default user agent if none is set
+							CURLOPT_SSLVERSION		=> 1,                     //force cURL to use TLSv1 (prevent it from using SSLv3 ever)
 			);
 
 	/**
@@ -326,7 +327,7 @@ class CurlHttpClient
 	}
 
 	/**
-	 * Wraper around curl's get_info method
+	 * Wraper around curl's getinfo method
 	 * http://www.php.net/manual/en/function.curl-getinfo.php
 	 *
 	 * @param int $opt
@@ -346,7 +347,7 @@ class CurlHttpClient
 	 */
 	public function getEffectiveUrl()
 	{
-		return $this->get_info(CURLINFO_EFFECTIVE_URL);
+		return $this->getInfo(CURLINFO_EFFECTIVE_URL);
 	}
 
 	/**
@@ -357,7 +358,7 @@ class CurlHttpClient
 	 */
 	public function getHttpResponseCode()
 	{
-		return $this->get_info(CURLINFO_HTTP_CODE);
+		return $this->getInfo(CURLINFO_HTTP_CODE);
 	}
 
 	/**
@@ -368,7 +369,7 @@ class CurlHttpClient
 	 */
 	public function getRequestHeaders()
 	{
-		return $this->get_info(CURLINFO_HEADER_OUT);
+		return $this->getInfo(CURLINFO_HEADER_OUT);
 	}
 
 	/**
@@ -376,7 +377,7 @@ class CurlHttpClient
 	 */
 	public function getRequestDuration()
 	{
-		return $this->get_info(CURLINFO_TOTAL_TIME);
+		return $this->getInfo(CURLINFO_TOTAL_TIME);
 	}
 
 	/**
