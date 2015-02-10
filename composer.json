@@ -18,8 +18,8 @@
         "ext-curl": "*"
     },
     "autoload": {
-        "psr-0": {
-            "Dinke\\": "."
+        "psr-4": {
+            "Dinke\\": "src/"
         }
     }
 }
