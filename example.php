@@ -8,7 +8,7 @@
 
 require 'vendor/autoload.php';
 
-$curl = new \Dinke\CurlHttpClient();
+$curl = new \Dinke\CurlHttpClient;
 
 //pretend to be Firefox 19.0 on Mac
 $useragent = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.8; rv:19.0) Gecko/20100101 Firefox/19.0";
@@ -27,7 +27,7 @@ $curl->setUserAgent($useragent);
 
 //if you want to send some post data
 //form post data array like this one
-$post_data = array('login' => 'pera', 'password' => 'joe', 'other_foo_field' => 'foo_value');
+$post_data = ['login' => 'pera', 'password' => 'joe', 'other_foo_field' => 'foo_value'];
 //or like a string: $post_data = 'login=pera&password=joe&other_foo_field=foo_value';
 
 //and send request to http://www.foo.com/login.php. Result page is stored in $html_data string

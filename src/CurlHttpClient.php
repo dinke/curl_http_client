@@ -4,10 +4,9 @@ namespace Dinke;
 
 /**
  * @version 2.0.x
- * @copyright &copy; 2014 Lampix.net
+ * @copyright &copy; 2015 Lampix.net
  * @author Dragan Dinic <dragan@dinke.net>
  * @license http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License
- * @todo Possible debug mode
  */
 
 /**
@@ -18,17 +17,18 @@ namespace Dinke;
  * sending post data, managing cookies, etc.
  *
  * Samle usage:
- * $curl = new CurlHttpClient();
+ * $curl = new /Dinke/CurlHttpClient;
  * $useragent = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.8; rv:19.0)";
  * $curl->setUserAgent($useragent);
  * $curl->storeCookies("/tmp/cookies.txt");
- * $post_data = array('login' => 'pera', 'password' => 'joe');
+ * $post_data = ['login' => 'pera', 'password' => 'joe'];
  * $html_data = $curl->sendPostData(http://www.foo.com/login.php, $post_data);
  */
 class CurlHttpClient
 {
 	/**
 	 * Curl handle
+	 *
 	 * @access protected
 	 * @var resource
 	 */
@@ -342,6 +342,7 @@ class CurlHttpClient
 	/**
 	 * Get last URL info
 	 * 	(usefull when original url was redirected to other location)
+	 *
 	 * @access public
 	 * @return string url
 	 */
@@ -374,6 +375,9 @@ class CurlHttpClient
 
 	/**
 	 * Total reqeust time in seconds for last transfer
+	 *
+	 * @access public
+	 * @return int
 	 */
 	public function getRequestDuration()
 	{
@@ -406,6 +410,7 @@ class CurlHttpClient
 	 * Close curl session and free resource
 	 * Usually no need to call this function directly but in case you do (i.e. to free resources),
 	 *  you'll have to call $this->init() in order to recreate curl handle
+	 *
 	 * @access public
 	 */
 	public function close()
