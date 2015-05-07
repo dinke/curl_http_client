@@ -1,9 +1,20 @@
 CurlHttpClient
 ================
-
 Curl based HTTP Client - Simple but effective OOP wrapper around Curl php lib.
 It allows sending post/get requests, using proxy, binding to specific IP, storing cookies etc.
 
+# Installation
+Add CurlHttpClient to your composer.json
+
+```
+{
+    "require": {
+        "dinke/curl-http-client": "dev-master"
+    }
+}
+```
+
+# Usage
 ```php
 
 $curl = new \Dinke\CurlHttpClient;
@@ -45,6 +56,9 @@ $html_data = $curl->fetchUrl("http://www.foo.com/foobar.php?login=pera&password=
 
 //use proxy
 //$curl->setProxy('http://www.proxyurl.com');
+
+//use proxy auth
+//$curl->setProxyAuth('user:pass');
 
 //get http response code for last request
 //$http_code = $curl->getHttpResponseCode();
