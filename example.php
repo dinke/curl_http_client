@@ -48,6 +48,9 @@ $html_data = $curl->fetchUrl("http://www.foo.com/foobar.php?login=pera&password=
 //use proxy
 //$curl->setProxy('http://www.proxyurl.com');
 
+//use proxy auth
+//$curl->setProxyAuth('user:pass');
+
 //get http response code for last request
 //$http_code = $curl->getHttpResponseCode();
 
