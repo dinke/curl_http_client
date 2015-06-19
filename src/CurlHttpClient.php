@@ -412,7 +412,7 @@ class CurlHttpClient
 	 * @return string error msg
 	 * @access public
 	 */
-	function getErrorMsg ()
+	public function getErrorMsg ()
 	{
 		return "Curl error #" . curl_errno($this->ch) . ": " . curl_error($this->ch);
 	}
@@ -423,7 +423,7 @@ class CurlHttpClient
 	 * @access public
 	 * @return boolean
 	 */
-	protected function hasError ()
+	public function hasError ()
 	{
 		return (curl_errno($this->ch) != 0) ? true : false;
 	}
