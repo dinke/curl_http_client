@@ -1,15 +1,12 @@
-<?php
-
-namespace Dinke;
+<?php namespace Dinke;
 
 /**
- * @version   2.0.x
+ * @version   2.0.8
  * @copyright &copy; 2015 Lampix.net
  * @author    Dragan Dinic <dragan@dinke.net>
  * @license   http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License
- */
-
-/**
+ *
+ *
  * Curl based HTTP Client
  * Simple but effective OOP wrapper around Curl php lib.
  *
@@ -17,16 +14,18 @@ namespace Dinke;
  * sending post data, managing cookies, etc.
  *
  * Samle usage:
- * $curl = new /Dinke/CurlHttpClient;
- * $useragent = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.8; rv:19.0)";
+ * $curl = new \Dinke\Curl();
+ * $useragent = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:41.0)';
  * $curl->setUserAgent($useragent);
- * $curl->storeCookies("/tmp/cookies.txt");
+ * $curl->storeCookies('/tmp/cookies.txt');
  * $post_data = ['login' => 'pera', 'password' => 'joe'];
- * $html_data = $curl->sendPostData(http://www.foo.com/login.php, $post_data);
+ * $html_data = $curl->sendPostData('http://www.foo.com/login.php', $post_data);
  */
 
-class CurlHttpClient
+class Curl
 {
+	const VERSION = '2.0.8';
+
 	/**
 	 * Curl handle
 	 *
@@ -35,11 +34,10 @@ class CurlHttpClient
 	 */
 	protected $ch;
 
-
 	/**
 	 * Default curl options
-	 *    (more details about each option: http://www.php.net/manual/en/function.curl-setopt-array.php)
-	 * @var array
+	 * @see    http://www.php.net/manual/en/function.curl-setopt-array.php
+	 * @type   array
 	 * @access protected
 	 */
 	protected $config = [
@@ -54,7 +52,7 @@ class CurlHttpClient
 	];
 
 	/**
-	 * CurlHttpClient constructor
+	 * Curl constructor
 	 *
 	 * @access public
 	 */
@@ -79,7 +77,7 @@ class CurlHttpClient
 
 	/**
 	 * Set custom curl option
-	 *    (usually not needed to call this directly, advanced users only)
+	 * (usually not needed to call this directly, advanced users only)
 	 *
 	 * @param int $opt
 	 * @param int $value
@@ -306,7 +304,7 @@ class CurlHttpClient
 
 	/**
 	 * Set file location where cookie data will be stored on curl handle close
-	 *    and then parsed and send along on new requests
+	 * and then parsed and send along on new requests
 	 *
 	 * @param string $cookie_file absolute path to cookie file (must be in writable dir)
 	 *
@@ -349,7 +347,7 @@ class CurlHttpClient
 
 	/**
 	 * Wraper around curl's getinfo method
-	 * http://www.php.net/manual/en/function.curl-getinfo.php
+	 * @see    http://www.php.net/manual/en/function.curl-getinfo.php
 	 *
 	 * @param int $opt
 	 *
@@ -442,7 +440,17 @@ class CurlHttpClient
 	}
 
 	/**
-	 * Curl_HTTP_Client destructor
+	 * Version Curl client
+	 *
+	 * @return string
+	 */
+	public function getVersion ()
+	{
+		return self::VERSION;
+	}
+
+	/**
+	 * Curl destructor
 	 *
 	 * @access public
 	 */

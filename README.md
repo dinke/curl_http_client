@@ -9,61 +9,91 @@ Add CurlHttpClient to your composer.json
 ```
 {
     "require": {
-        "dinke/curl-http-client": "dev-master"
+        "dinke/curl-http-client": "^2.0"
     }
 }
 ```
+##### For Laravel 5.1 add this to the config/app.php file: 
+```php
+'providers'  => [
+	...
+	Dinke\CurlServiceProvider::class,
+],
+
+'aliases'  => [
+	...
+	'Curl'      => Dinke\CurlFacade::class,
+],
+```
 
 # Usage
+
+##### Basic usage
 ```php
+$curl = new \Dinke\Curl();
 
-$curl = new \Dinke\CurlHttpClient;
+$curl->setUserAgent('Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:41.0)');
+$curl->storeCookies('/tmp/cookies.txt');
 
-//pretend to be Firefox 19.0 on Mac
-$useragent = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.8; rv:19.0) Gecko/20100101 Firefox/19.0";
-$curl->setUserAgent($useragent);
+$post_data = ['login' => 'pera', 'password' => 'joe'];
+$html_data = $curl->sendPostData('http://www.foo.com/login.php', $post_data);
 
-//uncomment next two lines if you want to automatically manage cookies
-//which will store them to file and send them on each http request
-//$cookies_file = "/tmp/cookies.txt";
-//$curl->storeCookies($cookies_file);
+echo $html_data;
 
-//Uncomment next line if you want to set credentials for basic http_auth
-//$curl->setCredentials($username, $password);
 
-//Uncomment next line if you want to set specific referrer
-//$curl->setReferer('http://www.foo.com/referer_url/');
+// if you have more than one IP on your server,
+// you can also bind to specific IP address like ...
+// $bind_ip = "192.168.0.1";
+// $curl->fetchUrl("http://www.foo.com/login.php", $bind_ip);
+// $html_data = $curl->sendPostData("http://www.foo.com/login.php", $post_data, $bind_ip);
 
-//if you want to send some post data
-//form post data array like this one
-$post_data = ['login' => 'pera', 'password' => 'joe', 'other_foo_field' => 'foo_value'];
-//or like a string: $post_data = 'login=pera&password=joe&other_foo_field=foo_value';
+// use proxy
+$curl->setProxy('http://www.proxyurl.com');
 
-//and send request to http://www.foo.com/login.php. Result page is stored in $html_data string
-$html_data = $curl->sendPostData("http://www.foo.com/login.php", $post_data);
+// use proxy auth
+$curl->setProxyAuth('user:pass');
 
-//You can also fetch data from somewhere using get method!
-//Fetch html from url
-$html_data = $curl->fetchUrl("http://www.foo.com/foobar.php?login=pera&password=joe&other_foo_field=foo_value");
+// get http response code for last request
+$http_code = $curl->getHttpResponseCode();
 
-//if you have more than one IP on your server,
-//you can also bind to specific IP address like ...
-//$bind_ip = "192.168.0.1";
-//$curl->fetch_url("http://www.foo.com/login.php", $bind_ip);
-//$html_data = $curl->sendPostData("http://www.foo.com/login.php", $post_data, $bind_ip);
+// get last http request duration in sec
+$duration = $curl->get_requestDuration();
 
-//and there are many other things you can do like
+// Curl curent Version
+echo $curl::VERSION; 
+or 
+echo $curl->getVersion();
+```
 
-//use proxy
-//$curl->setProxy('http://www.proxyurl.com');
+##### Laravel 5.1 usage
+```php
+Curl::setUserAgent('Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:41.0)');
+Curl::storeCookies(storage_path('cookies.txt'));
 
-//use proxy auth
-//$curl->setProxyAuth('user:pass');
+$post_data = ['login' => 'pera', 'password' => 'joe'];
+$html_data = Curl::sendPostData('http://www.foo.com/login.php', $post_data);
 
-//get http response code for last request
-//$http_code = $curl->getHttpResponseCode();
+dd($html_data);
 
-//get last http request duration in sec
-//$duration = $curl->get_requestDuration();
+// if you have more than one IP on your server,
+// you can also bind to specific IP address like ...
+$bind_ip = "192.168.0.1";
+Curl::fetchUrl("http://www.foo.com/login.php", $bind_ip);
+$html_data = Curl::sendPostData("http://www.foo.com/login.php", $post_data, $bind_ip);
 
+
+// use proxy
+Curl::setProxy('http://www.proxyurl.com');
+
+// use proxy auth
+Curl::setProxyAuth('user:pass');
+
+// get http response code for last request
+$http_code = Curl::getHttpResponseCode();
+
+// get last http request duration in sec
+$duration = Curl::get_requestDuration();
+
+// Curl curent Version
+echo Curl::getVersion();
 ```
