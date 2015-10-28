@@ -1,6 +1,6 @@
 <?php
 /**
- * @version 2.0.x
+ * @version 2.0.8
  * @copyright &copy; 2014 Lampix.net
  * @author Dragan Dinic <dragan@dinke.net>
  * @license http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License
@@ -8,10 +8,10 @@
 
 require 'vendor/autoload.php';
 
-$curl = new \Dinke\CurlHttpClient;
+$curl = new \Dinke\Curl();
 
-//pretend to be Firefox 19.0 on Mac
-$useragent = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.8; rv:19.0) Gecko/20100101 Firefox/19.0";
+//pretend to be Firefox 41.0 on Mac
+$useragent = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:41.0)";
 $curl->setUserAgent($useragent);
 
 //uncomment next two lines if you want to automatically manage cookies
@@ -58,4 +58,4 @@ $html_data = $curl->fetchUrl("http://www.foo.com/foobar.php?login=pera&password=
 //$duration = $curl->getRequestDuration();
 
 
-?>
+
