@@ -358,7 +358,11 @@ class CurlHttpClient
 	 */
 	public function getInfo ($opt = 0)
 	{
-		return curl_getinfo($this->ch, $opt);
+		if ($opt === 0) {
+			return curl_getinfo($this->ch);
+		} else {
+			return curl_getinfo($this->ch, $opt);
+		}
 	}
 
 	/**
